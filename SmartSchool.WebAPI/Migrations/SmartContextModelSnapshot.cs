@@ -36,7 +36,7 @@ namespace SmartSchool.WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Alunos");
+                    b.ToTable("Alunos", (string)null);
 
                     b.HasData(
                         new
@@ -102,7 +102,7 @@ namespace SmartSchool.WebAPI.Migrations
 
                     b.HasIndex("DisciplinaId");
 
-                    b.ToTable("AlunosDisciplinas");
+                    b.ToTable("AlunosDisciplinas", (string)null);
 
                     b.HasData(
                         new
@@ -239,7 +239,7 @@ namespace SmartSchool.WebAPI.Migrations
 
                     b.HasIndex("ProfessorId");
 
-                    b.ToTable("Disciplinas");
+                    b.ToTable("Disciplinas", (string)null);
 
                     b.HasData(
                         new
@@ -286,7 +286,7 @@ namespace SmartSchool.WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Professores");
+                    b.ToTable("Professores", (string)null);
 
                     b.HasData(
                         new
