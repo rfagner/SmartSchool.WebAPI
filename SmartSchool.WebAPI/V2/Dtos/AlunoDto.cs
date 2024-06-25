@@ -1,4 +1,4 @@
-﻿namespace SmartSchool.WebAPI.Dtos;
+﻿namespace SmartSchool.WebAPI.V2.Dtos;
 
 public class AlunoDto
 {

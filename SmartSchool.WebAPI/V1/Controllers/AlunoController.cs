@@ -1,17 +1,19 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Data;
-using SmartSchool.WebAPI.Dtos;
 using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.V1.Dtos;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SmartSchool.WebAPI.Controllers;
+namespace SmartSchool.WebAPI.V1.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class AlunoController : ControllerBase
 {
     private readonly IRepository _repo;
@@ -24,6 +26,10 @@ public class AlunoController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Método responsável por retornar todos os meus alunos
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public IActionResult Get()
     {
@@ -31,13 +37,25 @@ public class AlunoController : ControllerBase
         return Ok(_mapper.Map<IEnumerable<AlunoDto>>(alunos));
     }
 
+    /// <summary>
+    /// Método responsável por retornar apenas um único AlunoDTO.
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("getRegister")]
     public IActionResult GetRegister()
     {
         return Ok(new AlunoRegistrarDto());
     }
 
+    /// <summary>
+    /// Método responsável por retornar apenas um Aluno por meio do código  ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult GetById(int id)
     {
         var aluno = _repo.GetAlunoById(id, false);
@@ -49,6 +67,9 @@ public class AlunoController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
     public IActionResult Post(AlunoRegistrarDto model)
     {
         var aluno = _mapper.Map<Aluno>(model);
@@ -63,6 +84,10 @@ public class AlunoController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult Put(int id, AlunoRegistrarDto model)
     {
         var aluno = _repo.GetAlunoById(id);
@@ -80,6 +105,10 @@ public class AlunoController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult Patch(int id, AlunoRegistrarDto model)
     {
         var aluno = _repo.GetAlunoById(id);
@@ -97,6 +126,10 @@ public class AlunoController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult Delete(int id)
     {
         var aluno = _repo.GetAlunoById(id);

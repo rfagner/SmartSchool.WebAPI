@@ -1,15 +1,17 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Data;
-using SmartSchool.WebAPI.Dtos;
 using SmartSchool.WebAPI.Models;
+using SmartSchool.WebAPI.V1.Dtos;
 
-namespace SmartSchool.WebAPI.Controllers;
+namespace SmartSchool.WebAPI.V1.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public class ProfessorController : ControllerBase
 {
     private readonly IRepository _repo;
@@ -34,6 +36,9 @@ public class ProfessorController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult GetById(int id)
     {
         var Professor = _repo.GetProfessorById(id, false);
@@ -45,6 +50,9 @@ public class ProfessorController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
     public IActionResult Post(ProfessorRegistrarDto model)
     {
         var prof = _mapper.Map<Professor>(model);
@@ -59,6 +67,10 @@ public class ProfessorController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult Put(int id, ProfessorRegistrarDto model)
     {
         var prof = _repo.GetProfessorById(id, false);
@@ -76,6 +88,10 @@ public class ProfessorController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult Patch(int id, ProfessorRegistrarDto model)
     {
         var prof = _repo.GetProfessorById(id, false);
@@ -93,6 +109,10 @@ public class ProfessorController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult Delete(int id)
     {
         var prof = _repo.GetProfessorById(id, false);
