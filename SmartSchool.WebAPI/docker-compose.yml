@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  smartschool:
+    build: .
+    container_name: smartschool-webapi
+    ports:
+      - "5216:8080"
+    networks:
+      - smartschoolNET
+    depends_on:
+      - mysql
+    environment:
+      - DBHOST=mysql
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  mysql:
+    image: "mysql:8.0"
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - SmartSchoolDb:/var/lib/mysql
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro # Mapeia os arquivos de fuso horário
+    networks:
+      - smartschoolNET
+    command: --default-authentication-plugin=mysql_native_password # Força o plugin de autenticação legado
+    environment:
+      - MYSQL_PORT=3306 
+      - MYSQL_DATABASE=SmartSchool
+      - MYSQL_ROOT_PASSWORD=BrasilHexa2026  # Use apenas MYSQL_ROOT_PASSWORD para o usuário root
+      - MYSQL_ROOT_HOST=%
+      - bind-address:0.0.0.0
+
+networks:
+  smartschoolNET:
+
+volumes:
+  SmartSchoolDb:

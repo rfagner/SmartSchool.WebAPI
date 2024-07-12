@@ -4,12 +4,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SmartSchool.WebAPI.Data;
 using System.Reflection;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<SmartContext>(
-    context => context.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<SmartContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("Default"),
+    new MySqlServerVersion(new Version(8, 0, 21)),
+    mysqlOptions =>
+    {
+        mysqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(30),
+            errorNumbersToAdd: null);
+    }));
 
 builder.Services.AddScoped<IRepository, Repository>();
 
@@ -47,7 +55,7 @@ builder.Services.AddSwaggerGen(options =>
                 Title = "SmartScool API",
                 Version = description.ApiVersion.ToString(),
                 TermsOfService = new Uri("https://github.com/rfagner"),
-                Description = "A descrição da WebAPI do SmartSchool",
+                Description = "A descriï¿½ï¿½o da WebAPI do SmartSchool",
                 License = new OpenApiLicense
                 {
                     Name = "SmartSchool License",
@@ -67,7 +75,6 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 });
-
 
 var app = builder.Build();
 

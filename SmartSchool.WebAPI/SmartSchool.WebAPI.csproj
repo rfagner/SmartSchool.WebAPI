@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -8,31 +7,29 @@
     <DocumentationFile>SmartSchool.WebAPI.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	<IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
-	<DocumentationFile>SmartSchool.WebAPI.xml</DocumentationFile>
-	<IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <DocumentationFile>SmartSchool.WebAPI.xml</DocumentationFile>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
-    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Asp.Versioning.Http" Version="8.1.0"/>
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0"/>
+    <PackageReference Include="AutoMapper" Version="13.0.1"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.5"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />	
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2"/>
+    <PackageReference Include="MySqlConnector" Version="2.3.7"/>
   </ItemGroup>
-
   <ItemGroup>
-    <Folder Include="V1\Controllers\" />
+    <Folder Include="V1\Controllers\"/>
   </ItemGroup>
-
 </Project>
